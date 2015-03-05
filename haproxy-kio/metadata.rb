@@ -1,0 +1,12 @@
+name             'haproxy-kio'
+maintainer       'Franklin Wise'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures haproxy-kio'
+long_description 'Installs/Configures haproxy-kio'
+version          '0.1.0'
+
+depends 'consul-template'
+depends 'runit'
+depends 'consul-kio'
+depends 'haproxy'

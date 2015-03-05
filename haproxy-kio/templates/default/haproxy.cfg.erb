@@ -1,0 +1,83 @@
+global
+  log 127.0.0.1   local0
+  log 127.0.0.1   local1 notice
+  #log loghost    local0 info
+  maxconn <%= node[:haproxy][:global_max_connections] %>
+  #debug
+  #quiet
+  user  <%= node[:haproxy][:user] %>
+  group <%= node[:haproxy][:group] %>
+
+  <% if node[:haproxy][:stats_socket_level] %>
+  stats socket <%= node[:haproxy][:stats_socket_path] %> level <%= node[:haproxy][:stats_socket_level] %>
+  <% else %>
+  stats socket <%= node[:haproxy][:stats_socket_path] %>
+  <% end %>
+
+defaults
+  log             global
+  mode            http
+  option          httplog
+  option          dontlognull
+  option          forwardfor except 127.0.0.0/8
+  option          redispatch
+  retries                 <%= node[:haproxy][:retries] %>
+  maxconn                 <%= node[:haproxy][:default_max_connections] %>
+  timeout client          <%= node[:haproxy][:client_timeout] %>             # Client and server timeout must match the longest
+  timeout server          <%= node[:haproxy][:server_timeout] %>             # time we may wait for a response from the server.
+  timeout queue           <%= node[:haproxy][:queue_timeout] %>              # Don't queue requests too long if saturated.
+  timeout connect         <%= node[:haproxy][:connect_timeout] %>           # There's no reason to change this one.
+  timeout http-request    <%= node[:haproxy][:http_request_timeout] %>	# A complete request may never take that long.
+  timeout check           10s
+  timeout http-keep-alive 10s
+  option          http-server-close
+  option          abortonclose                                      # enable early dropping of aborted requests from pending queue
+  option          httpchk                                           # enable HTTP protocol to check on servers health
+
+  <% if node[:haproxy][:enable_stats] -%>
+  stats auth <%= node[:haproxy][:stats_user] %>:<%= node[:haproxy][:stats_password] %>
+  stats uri <%= node[:haproxy][:stats_url] %>
+  <% end -%>
+
+<%- if !@nginx_hosts %>
+listen application 0.0.0.0:80
+  # configure a fake backend as long as there are no real ones
+  # this way HAProxy will not fail on a config check
+  balance <%= node[:haproxy][:balance] %>
+  server localhost 127.0.0.1:8080 weight 1 maxconn 5 check
+<%- end %>
+
+#---------------------------------------------------------------------
+# main frontend which proxys to the backends
+#---------------------------------------------------------------------
+frontend main_http *:80
+        option forwardfor except 127.0.0.1
+        default_backend         nginx_80
+
+frontend main_https *:443
+        option forwardfor except 127.0.0.1
+        default_backend         nginx_443
+
+#---------------------------------------------------------------------
+# round robin balancing between the various backends
+#---------------------------------------------------------------------
+backend nginx_80
+    balance     roundrobin
+        #option httpchk GET /health HTTP/1.1\r\nHost:\ api.truck-n.com
+		option httpchk
+	<%- if @nginx_hosts %>
+		<%- @nginx_hosts.each_with_index do |host, idx| %>
+	server node<%=idx%> <%=host%>:80 check port 80
+		<%- end %>
+	<%- end %>
+ 
+backend nginx_443
+    balance     roundrobin
+#       option httpchk GET / HTTP/1.1\r\nHost:\ host.com
+        option httpchk
+	<%- if @nginx_hosts %>
+		<%- @nginx_hosts.each_with_index do |host, idx| %>
+	server node<%=idx%> <%=host%>:443 check port 443
+		<%- end %>
+	<%- end %>
+
