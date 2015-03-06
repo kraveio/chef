@@ -3,7 +3,8 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
+  require_chef_omnibus: true
 
 platforms:
   - name: ubuntu-12.04
@@ -11,5 +12,7 @@ platforms:
 
 suites:
   - name: default
-    run_list:
+    run_list: 
+      - recipe[consul-kio::server]
+      - recipe[haproxy-kio::default]
     attributes:
