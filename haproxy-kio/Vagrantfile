@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
     chef.run_list = [
 		'recipe[consul-kio::server]',
-		'recipe[consul-kio::sv-nging]',
+		'recipe[consul-kio::sv-nginx]',
 		'recipe[haproxy-kio::default]'
     ]
   end

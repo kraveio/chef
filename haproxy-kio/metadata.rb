@@ -6,7 +6,7 @@ description      'Installs/Configures haproxy-kio'
 long_description 'Installs/Configures haproxy-kio'
 version          '0.1.0'
 
-depends 'consul-template'
 depends 'runit'
+depends 'consul-template'
 depends 'consul-kio'
 depends 'haproxy'
