@@ -1,5 +1,3 @@
-### in progress, delete if not completed
-
 
 include_recipe 'consul'
 
