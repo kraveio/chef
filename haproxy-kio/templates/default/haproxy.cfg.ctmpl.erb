@@ -38,7 +38,7 @@ defaults
 	stats uri <%= node[:haproxy][:stats_url] %>
 <% end -%>
 
-{{ if not service "nginx-public" }}
+{{ if not ( service "nginx-public" ) }}
 	listen application 0.0.0.0:80
 	# configure a fake backend as long as there are no real ones
 	# this way HAProxy will not fail on a config check

@@ -4,6 +4,9 @@ metadata
 
 cookbook 'haproxy', '~> 0.1', github: "gotchef/haproxy"
 cookbook 'aws-util', '~> 0.1.0', github: 'gotchef/aws-util'
-cookbook 'consul-template', '~> 0.7.0'
-cookbook 'consul-kio', '~> 0.1', git: "https://github.com/kraveio/chef.git", rel: "consul-kio"
+cookbook 'consul-kio', '~> 0.1', github: "kraveio/chef", rel: "consul-kio"
+
+#cookbook 'consul-template', '~> 0.7.0'
+#temp, bug fix
+cookbook 'consul-template', github: "franklinwise/chef-consul-template", branch: "config-dir-patch"
 
