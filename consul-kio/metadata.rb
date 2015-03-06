@@ -8,4 +8,4 @@ version          '0.1.0'
 
 depends 'consul'
 
-suggests 'aws-util', '~> 0.1.0' # for server ip discovery
+suggests 'aws-util', '~> 0.1.1' # for server ip discovery
