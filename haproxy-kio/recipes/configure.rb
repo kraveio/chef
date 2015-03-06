@@ -9,7 +9,7 @@ runit_service 'haproxy' do
   action :nothing 
 end
 
-config_dir = node['haproxy']['conf_dir']
+config_dir = node[:haproxy][:service][:conf_dir]
 config_file = "#{config_dir}/haproxy.cfg"
 config_template = "#{config_dir}/haproxy.cfg.tmpl"
 
