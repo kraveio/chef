@@ -5,8 +5,8 @@ global
 	maxconn <%= node[:haproxy][:global_max_connections] %>
 	#debug
 	#quiet
-	user  <%= node[:haproxy][:user] %>
-	group <%= node[:haproxy][:group] %>
+	user  <%= node[:haproxy][:service][:user] %>
+	group <%= node[:haproxy][:service][:group] %>
 	
 	<% if node[:haproxy][:stats_socket_level] %>
 	stats socket <%= node[:haproxy][:stats_socket_path] %> level <%= node[:haproxy][:stats_socket_level] %>
@@ -65,6 +65,7 @@ frontend main_https *:443
 # round robin balancing between the various backends
 #---------------------------------------------------------------------
 backend nginx_80
+	mode http
 	balance     <%= node[:haproxy][:balance] %>
 	#option httpchk GET /health HTTP/1.1\r\nHost:\ api.truck-n.com
 	option httpchk
@@ -74,6 +75,7 @@ backend nginx_80
 	{{end}}
  
 backend nginx_443
+	mode http
 	balance     <%= node[:haproxy][:balance] %>
 	#option httpchk GET / HTTP/1.1\r\nHost:\ host.com
 	option httpchk

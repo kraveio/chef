@@ -5,8 +5,8 @@ global
   maxconn <%= node[:haproxy][:global_max_connections] %>
   #debug
   #quiet
-  user  <%= node[:haproxy][:user] %>
-  group <%= node[:haproxy][:group] %>
+  user  <%= node[:haproxy][:service][:user] %>
+  group <%= node[:haproxy][:service][:group] %>
 
   <% if node[:haproxy][:stats_socket_level] %>
   stats socket <%= node[:haproxy][:stats_socket_path] %> level <%= node[:haproxy][:stats_socket_level] %>
