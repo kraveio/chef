@@ -3,5 +3,4 @@ source "https://supermarket.chef.io"
 metadata
 
 cookbook 'consul', '~> 0.8.3'
-cookbook 'aws-util', '~> 0.1.0', github: 'gotchef/aws-util'
 
