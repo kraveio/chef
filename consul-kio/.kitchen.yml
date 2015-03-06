@@ -1,10 +1,12 @@
 ---
 driver:
   name: vagrant
+  require_chef_omnibus: true
+  ssh:
+    insert_key: false
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: true
 
 platforms:
   - name: ubuntu-12.04
