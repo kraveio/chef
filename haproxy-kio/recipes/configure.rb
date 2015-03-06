@@ -4,7 +4,6 @@
 
 include_recipe 'runit'
 include_recipe 'consul-template::install_binary'
-include_recipe 'consul-template::service'
 
 runit_service 'haproxy' do
   action :nothing 
@@ -47,3 +46,4 @@ consul_template_config 'haproxy' do
   notifies :reload, 'runit_service[consul-template]', :delayed
 end
 
+include_recipe 'consul-template::service'
