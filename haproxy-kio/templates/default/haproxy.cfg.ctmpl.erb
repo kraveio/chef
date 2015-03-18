@@ -16,7 +16,7 @@ global
 
 defaults
 	log             global
-	mode            tcp
+	mode            http
 	option          dontlognull
 	option          forwardfor except 127.0.0.0/8
 	option          redispatch  
@@ -40,6 +40,7 @@ defaults
 
 {{ if not ( service "nginx-public" ) }}
 	listen application 0.0.0.0:80
+	mode http
 	# configure a fake backend as long as there are no real ones
 	# this way HAProxy will not fail on a config check
 	balance roundrobin

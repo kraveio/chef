@@ -1,0 +1,7 @@
+name             'cell'
+maintainer       'Franklin Wise'
+maintainer_email ''
+license          'MIT'
+description      'Installs/Configures cell'
+long_description 'Installs/Configures cell'
+version          '0.1.0'
