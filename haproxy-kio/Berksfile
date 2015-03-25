@@ -3,7 +3,7 @@ source "https://supermarket.chef.io"
 metadata
 
 cookbook 'haproxy', '~> 0.1', github: "gotchef/haproxy"
-cookbook 'consul-kio', '~> 0.1.1', github: "kraveio/chef", rel: "consul-kio"
+cookbook 'consul-got', '~> 0.1.1', github: "gotchef/consul-got"
 
 # temp, bug fix
 cookbook 'consul-template', github: "franklinwise/chef-consul-template", branch: "config-dir-patch"

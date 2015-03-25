@@ -1,3 +1,20 @@
 source "https://supermarket.chef.io"
 
 metadata
+
+cookbook 'golang'
+cookbook 'runit'
+cookbook 'build-essential'
+cookbook 'ossec', '~> 1.0.5'
+
+cookbook 'consul-got', '~> 0.1.1', github: "gotchef/consul-got"
+cookbook 'consul-template', '~> 0.7.0'
+
+cookbook 'logstash-forwarder', '~> 0.1', github: "gotchef/logstash-forwarder"
+
+cookbook 'prometheus-exporter', '~> 0.1', github: "gotchef/prometheus-exporter"
+
+cookbook 'haproxy', '~> 0.1', github: "gotchef/haproxy"
+cookbook 'nginx', '~> 0.1', github: "gotchef/nginx"
+
+cookbook 'haproxy-kio', '~> 0.1', github: "kraveio/haproxy-kio"

@@ -20,12 +20,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.json = {
     }
     chef.run_list = [
-		'recipe[consul-kio::client]',
-		'recipe[haproxy::default]',
-		'recipe[logstash-forwarder::client]'
-		# 'recipe[prometheous::client]',
-		# 'recipe[ossec::client]',
-		# 'recipe[nginx::default]' 
+		'recipe[apt]',
+		'recipe[consul-got::client]',
+		'recipe[consul-template::default]',
+		'recipe[logstash-forwarder]',
+		'recipe[haproxy-kio::default]',
+		'recipe[nginx::default]',
+		'recipe[ossec::client]',
+		'recipe[prometheous-exporter::machine]',
+		'recipe[prometheous-exporter::haproxy]'
     ]
   end
 end
