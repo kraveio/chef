@@ -42,7 +42,7 @@ resource "aws_security_group" "ssh_base" {
 
 resource "aws_security_group" "nat" {
 	vpc_id = "${aws_vpc.main.id}"
-	name = "jump"
+	name = "nat"
 	description = "A jump nat server"
 
 	ingress {
