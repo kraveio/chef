@@ -15,13 +15,18 @@ variable "zone_alt" {
 }
 
 variable "key_name" {
-	default = ""
+	default = "Master2014"
 }
+
+variable "aws_key_path" {
+	default = "/Users/wise/.ssh/taku/ThumbnailMaster2014.pem"
+}
+
 
 variable "amis" {
 	default = {
-		us-east-1 = "ami-aa7ab6c2"
-		us-west-2 = "ami-f34032c3"
+		us-east-1 = "ami-aa7ab6c2" #ubuntu
+		us-west-2 = "ami-f34032c3" #ubuntu
 	}
 }
 

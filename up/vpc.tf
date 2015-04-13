@@ -91,4 +91,14 @@ resource "aws_instance" "nat" {
 	tags {
 		Name = "nat"
 	}
+	provisioner "remote-exec" {
+		inline = [
+			"sudo yum update -y"
+		]
+		connection {
+			user = "ec2-user"
+			agent = true
+		}
+	}
+
 }
