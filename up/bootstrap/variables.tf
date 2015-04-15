@@ -15,9 +15,18 @@ variable "zone_default" {}
 variable "zone_alt" {}
 variable "chef_ami" {}
 
+
 # to be put onto the jump server
 # not clear if we can find a better approach
-variable "aws_key_path" { }
+variable "aws_key_path" {}
+
+############################
+# DEFAULTS
+############################
+
+variable "vpc_cidr_block" {
+	default = "10.0.0.0/16"
+}
 
 ############################
 # LOOKUP
@@ -35,4 +44,20 @@ variable "jump_amis" {
 	}
 }
 
+
+############################
+# OUTPUT
+############################
+
+output "vpc_id" {
+    value = "${aws_vpc.main.id}"
+}
+
+output "sg_ssh_base_id" {
+    value = "${aws_security_group.ssh_base.id}"
+}
+
+output "jump_ip" {
+	value = "${aws_instance.jump.public_ip}"
+}
 

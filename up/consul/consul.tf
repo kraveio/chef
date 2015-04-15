@@ -1,9 +1,16 @@
+provider "aws" {
+	access_key = "${var.access_key}"
+	secret_key = "${var.secret_key}"
+	region = "${var.region}"
+}
+
+
 resource "aws_instance" "consul" {
 	instance_type = "m3.medium"
 	private_ip = "10.0.100.7"
 	subnet_id = "${aws_subnet.consul.id}"
 	# iam_instance_profile = "consul"
-	security_groups = ["${aws_security_group.ssh_base.id}", "${aws_security_group.consul.id}"]
+	security_groups = ["${var.sg_ssh_base_id}", "${aws_security_group.consul_server.id}"]
 
 	ami = "${var.ami}"
 	availability_zone = "${var.zone_default}"
@@ -20,9 +27,14 @@ resource "aws_instance" "consul" {
 		Name = "consul-01"
 	}
 
+	# wait until server is up
+	provisioner "local-exec" {
+		command = "sleep 30" #it takes a little while for the server to come up
+	}
+
 	# create tunnel on 12022 to chef 
 	provisioner "local-exec" {
-		command = "ssh -f -L 12022:${self.private_ip}:22 ec2-user@${aws_instance.jump.public_ip} -o StrictHostKeyChecking=no sleep 300 <&- >&- 2>&- &"
+		command = "ssh -f -L 12022:${self.private_ip}:22 ec2-user@${var.jump_ip} -o StrictHostKeyChecking=no sleep 300 <&- >&- 2>&- &"
 	}
 
 	connection {
@@ -39,12 +51,17 @@ resource "aws_instance" "consul" {
 	}
 
 	provisioner "file" {
-		source = "./bootstrap-chef-server.sh"
-		destination = "~/bootstrap-chef-server.sh"
+		source = "${path.module}/bootstrap-chef.sh"
+		destination = "~/bootstrap-chef.sh"
     }
 
 	provisioner "remote-exec" {
-		script = "sudo ./bootstrap-chef-server.sh"
+		inline = [
+			"sudo mkdir -p /opt/bootstrap",
+			"sudo mv -f ~/bootstrap-chef.sh /opt/bootstrap/",
+			"sudo chmod 774 /opt/bootstrap/bootstrap-chef.sh", # make executable
+			"sudo /opt/bootstrap/bootstrap-chef.sh"
+		]
 	}
 }
 

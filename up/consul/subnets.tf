@@ -1,3 +1,4 @@
+
 resource "aws_subnet" "consul" {
 	vpc_id = "${var.vpc_id}"
 	cidr_block = "10.0.100.0/24"
