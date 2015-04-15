@@ -1,6 +1,8 @@
 #!/bin/bash
 
-brew install terraform
+echo "todo"
 
-ssh -f -N -L 12022:${aws_instance.chef.private_ip}:22 ec2-user@${aws_instance.jump.public_ip} -o StrictHostKeyChecking=no
+ssh-add ~/.ssh/aws_key
+
+#brew install terraform
 

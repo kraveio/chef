@@ -71,35 +71,4 @@ resource "aws_route_table_association" "dmz_alt" {
     route_table_id = "${aws_route_table.dmz.id}"
 }
 
-############################
-# NAT Instance
-############################
 
-resource "aws_instance" "nat" {
-	instance_type = "m1.small"
-	private_ip = "10.0.0.250"
-	source_dest_check = false				#important for nat
-	subnet_id = "${aws_subnet.dmz.id}"
-	security_groups = ["${aws_security_group.nat.id}"]
-	ami = "${lookup(var.nat_amis, var.region)}"
-	availability_zone = "${var.zone_default}"
-	key_name = "${var.key_name}"
-	root_block_device {
-#		volume_size = ""
-		delete_on_termination = true
-	}
-	tags {
-		Name = "nat"
-	}
-	connection {
-			user = "ec2-user"
-			agent = true
-	}
-
-	provisioner "remote-exec" {
-		inline = [
-			"sudo yum update -y"
-		]
-	}
-
-}

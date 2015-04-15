@@ -1,6 +1,17 @@
 
+############################
+# REQUIRED
+############################
+
 variable "access_key" {}
 variable "secret_key" {}
+variable "aws_account_id" {}
+variable "key_name" {}
+variable "vpc_name" {}
+
+############################
+# Defaults
+############################
 
 variable "region" {
     default = "us-west-2"
@@ -14,14 +25,9 @@ variable "zone_alt" {
 	default = "us-west-2b"
 }
 
-variable "key_name" {
-	default = "Master2014"
-}
-
-variable "aws_key_path" {
-	default = "/Users/wise/.ssh/taku/ThumbnailMaster2014.pem"
-}
-
+############################
+# Lookup
+############################
 
 variable "amis" {
 	default = {
@@ -30,26 +36,4 @@ variable "amis" {
 	}
 }
 
-variable "nat_amis" {
-	default = {
-		us-west-2 = "ami-49691279"
-	}
-}
 
-variable "jump_amis" {
-	default = {
-		us-west-2 = "ami-d13845e1"
-	}
-}
-
-###################
-#  VPC
-################### 
-
-variable "vpc_name" { }
-variable "aws_account_id" { }
-
-# todo - figure out how to do array variable for jump security group ips
-
-# arn:aws:service:region:account:resource
-# arn:aws:iam::123456789012:instance-profile/Webserver
