@@ -23,12 +23,12 @@ resource "aws_instance" "chef" {
 
 	# wait until server is up
 	provisioner "local-exec" {
-		command = "sleep 30" #it takes a little while for the server to come up
+		command = "sleep ${var.sleep_seconds}" #it takes a little while for the server to come up
 	}
 
 	# create tunnel on 12022 to chef 
 	provisioner "local-exec" {
-		command = "ssh -f -L 12022:${self.private_ip}:22 ec2-user@${aws_instance.jump.public_ip} -o StrictHostKeyChecking=no sleep 270 <&- >&- 2>&- &"
+		command = "ssh -f -L 12022:${self.private_ip}:22 ec2-user@${aws_instance.jump.public_ip} -o StrictHostKeyChecking=no sleep ${var.ssh_wait_seconds} <&- >&- 2>&- &"
 	}
 
 	connection {
@@ -87,6 +87,10 @@ resource "aws_instance" "jump" {
 		agent = true
 	}
 
+	provisioner "local-exec" {
+		command = "sleep ${var.sleep_seconds}" #it takes a little while for the server to come up
+	}
+
 	provisioner "remote-exec" {
 		inline = [
 			"sudo yum update -y"
@@ -132,12 +136,12 @@ resource "aws_instance" "nat" {
 
 	# wait until jump server is up
 	provisioner "local-exec" {
-		command = "sleep 30" #it takes a little while for the server to come up
+		command = "sleep ${var.sleep_seconds}" #it takes a little while for the server to come up
 	}
 
 	# create tunnel on 12023 to chef
 	provisioner "local-exec" {
-		command = "ssh -f -L 12023:${self.private_ip}:22 ec2-user@${aws_instance.jump.public_ip} -o StrictHostKeyChecking=no sleep 270 <&- >&- 2>&- &"
+		command = "ssh -f -L 12023:${self.private_ip}:22 ec2-user@${aws_instance.jump.public_ip} -o StrictHostKeyChecking=no sleep ${var.ssh_wait_seconds} <&- >&- 2>&- &"
 	}
 
 	connection {
