@@ -36,6 +36,9 @@ variable "ssh_wait_seconds" {
 	default = "260"
 }
 
+variable "jump_access_cidr" {
+	default = "0.0.0.0/0"
+}
 
 ############################
 # LOOKUP

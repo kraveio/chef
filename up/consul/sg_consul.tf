@@ -1,6 +1,6 @@
 
 resource "aws_security_group" "consul_client" {
-	vpc_id = "${var.vpc_id}"
+	vpc_id = "${aws_vpc.main.id}"
 	name = "consul_client"
 	description = "Consul Clients"
 
@@ -34,7 +34,7 @@ resource "aws_security_group" "consul_client" {
 }
 
 resource "aws_security_group" "consul_server" {
-	vpc_id = "${var.vpc_id}"
+	vpc_id = "${aws_vpc.main.id}"
 	name = "consul_server"
 	description = "Consul Server"
 
