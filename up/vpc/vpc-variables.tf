@@ -37,7 +37,7 @@ variable "ssh_wait_seconds" {
 }
 
 variable "jump_access_cidr" {
-	default = "0.0.0.0/0"
+	default = "0.0.0.0/0" # use + to delimit more
 }
 
 ############################
