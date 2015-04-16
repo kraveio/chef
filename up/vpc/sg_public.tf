@@ -1,7 +1,7 @@
 
 resource "aws_security_group" "public-web" {
 	vpc_id = "${aws_vpc.main.id}"
-	name = "nat"
+	name = "public-web"
 	description = "Public Facing www ports"
 
 	ingress {
@@ -21,7 +21,7 @@ resource "aws_security_group" "public-web" {
 
 resource "aws_security_group" "public-ping" {
 	vpc_id = "${aws_vpc.main.id}"
-	name = "nat"
+	name = "public-ping"
 	description = "Allow Ping from the Internet"
 
 	ingress {
@@ -34,7 +34,7 @@ resource "aws_security_group" "public-ping" {
 
 resource "aws_security_group" "public-incapsula" {
 	vpc_id = "${aws_vpc.main.id}"
-	name = "nat"
+	name = "public-incapsula"
 	description = "Allow Incapsula traffic on www ports"
 
 	ingress {

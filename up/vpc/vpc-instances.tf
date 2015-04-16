@@ -55,7 +55,7 @@ resource "aws_instance" "chef" {
 			"sudo mkdir -p /opt/bootstrap",
 			"sudo mv -f ~/bootstrap-chef-server.sh /opt/bootstrap/",
 			"sudo chmod 774 /opt/bootstrap/bootstrap-chef-server.sh", # make executable
-			"sudo /opt/bootstrap/bootstrap-chef0server.sh"
+			"sudo /opt/bootstrap/bootstrap-chef-server.sh"
 		]
 	}
 }
