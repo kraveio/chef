@@ -1,5 +1,4 @@
 
-
 ############################
 # REQUIRED
 ############################
@@ -23,6 +22,17 @@ variable "aws_key_path" {}
 ############################
 # DEFAULTS
 ############################
+variable "region" {
+    default = "us-west-2"
+}
+
+variable "zone_default" {
+	default = "us-west-2a"
+}
+
+variable "zone_alt" {
+	default = "us-west-2b"
+}
 
 variable "vpc_cidr_block" {
 	default = "10.0.0.0/16"
@@ -56,6 +66,12 @@ variable "jump_amis" {
 	}
 }
 
+variable "amis" {
+	default = {
+		us-east-1 = "ami-aa7ab6c2" #ubuntu
+		us-west-2 = "ami-f34032c3" #ubuntu
+	}
+}
 
 ############################
 # OUTPUT
@@ -71,5 +87,13 @@ output "sg_ssh_base_id" {
 
 output "jump_ip" {
 	value = "${aws_instance.jump.public_ip}"
+}
+
+#output "chef_ip" {
+#	value = "${aws_instance.chef.private_ip}"
+#}
+
+output "nat_ip" {
+	value = "${aws_instance.nat.private_ip}"
 }
 
