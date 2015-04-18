@@ -124,7 +124,6 @@ resource "aws_instance" "nat" {
 	availability_zone = "${var.zone_default}"
 	key_name = "${var.key_name}"
 	root_block_device {
-#		volume_size = ""
 		delete_on_termination = true
 	}
 	tags {

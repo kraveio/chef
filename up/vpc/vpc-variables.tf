@@ -12,7 +12,6 @@ variable "vpc_name" {}
 variable "region" {}
 variable "zone_default" {}
 variable "zone_alt" {}
-variable "chef_ami" {}
 
 
 # to be put onto the jump server
@@ -67,6 +66,13 @@ variable "jump_amis" {
 }
 
 variable "amis" {
+	default = {
+		us-east-1 = "ami-aa7ab6c2" #ubuntu
+		us-west-2 = "ami-f34032c3" #ubuntu
+	}
+}
+
+variable "chef_ami" {
 	default = {
 		us-east-1 = "ami-aa7ab6c2" #ubuntu
 		us-west-2 = "ami-f34032c3" #ubuntu

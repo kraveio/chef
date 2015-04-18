@@ -1,4 +1,10 @@
 
+resource "aws_security_group" "public_lb" {
+	vpc_id = "${aws_vpc.main.id}"
+	name = "public-lb"
+	description = "Loadbalancer - Marker Group"
+}
+
 resource "aws_security_group" "public-web" {
 	vpc_id = "${aws_vpc.main.id}"
 	name = "public-web"

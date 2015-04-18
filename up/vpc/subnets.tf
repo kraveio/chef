@@ -202,10 +202,10 @@ resource "aws_subnet" "server_state_alt" {
 	}
 }
 
-** Long Term Storage - Perm **
+## Long Term Storage - Perm ##
 
 resource "aws_subnet" "kafka_db" {
-	vpc_id = "${aws_vpc.redis_storage.id}"
+	vpc_id = "${aws_vpc.main.id}"
 	cidr_block = "10.0.102.0/24"
 	availability_zone = "${var.zone_default}"
 	tags {
@@ -223,7 +223,7 @@ resource "aws_subnet" "kafka_db_alt" {
 }
 
 resource "aws_subnet" "redis_db" {
-	vpc_id = "${aws_vpc.redis_storage.id}"
+	vpc_id = "${aws_vpc.main.id}"
 	cidr_block = "10.0.110.0/24"
 	availability_zone = "${var.zone_default}"
 	tags {
@@ -240,7 +240,7 @@ resource "aws_subnet" "redis_db_alt" {
 	}
 }
 
-** Long Term Storage - Canonical **
+## Long Term Storage - Canonical ##
 
 resource "aws_subnet" "couchbase" {
 	vpc_id = "${aws_vpc.main.id}"
