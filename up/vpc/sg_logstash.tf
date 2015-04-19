@@ -13,7 +13,7 @@ resource "aws_security_group" "logstash" {
 		from_port = 12345
 		to_port = 12345
 		protocol = "tcp"
-		security_groups = ["{aws_security_group.linux_base.id}"]
+		security_groups = ["${aws_security_group.ssh_base.id}"]
 	}
 }
 

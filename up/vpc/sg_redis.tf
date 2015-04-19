@@ -14,7 +14,7 @@ resource "aws_security_group" "redis_server" {
 		from_port = 6379
 		to_port = 6379
 		protocol = "tcp"
-		security_groups = ["{aws_security_group.redis_client.id}"]
+		security_groups = ["${aws_security_group.redis_client.id}"]
 	}
 }
 

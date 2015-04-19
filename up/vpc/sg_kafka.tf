@@ -15,7 +15,7 @@ resource "aws_security_group" "kafka_server" {
 		from_port = 9092
 		to_port = 9092
 		protocol = "tcp"
-		cidr_blocks = ["${aws_security_group.kafka_client.id}"] 
+		security_groups = ["${aws_security_group.kafka_client.id}"] 
 	}
 }
 

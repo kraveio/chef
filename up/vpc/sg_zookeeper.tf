@@ -15,7 +15,7 @@ resource "aws_security_group" "zookeeper_server" {
 		from_port = 2181
 		to_port = 2181
 		protocol = "tcp"
-		cidr_blocks = ["${aws_security_group.zookeeper_client.id}"] 
+		security_groups = ["${aws_security_group.zookeeper_client.id}"] 
 	}
 }
 
@@ -28,20 +28,20 @@ resource "aws_security_group" "zookeeper_internal" {
 		from_port = 2181
 		to_port = 2181
 		protocol = "tcp"
-		cidr_blocks = ["${aws_security_group.zookeeper_server.id}"] 
+		security_groups = ["${aws_security_group.zookeeper_server.id}"] 
 	}
 
 	ingress {
 		from_port = 2888
 		to_port = 2888
 		protocol = "tcp"
-		cidr_blocks = ["${aws_security_group.zookeeper_server.id}"] 
+		security_groups = ["${aws_security_group.zookeeper_server.id}"] 
 	}
 
 	ingress {
 		from_port = 3888
 		to_port = 3888
 		protocol = "tcp"
-		cidr_blocks = ["$aws_security_group.zookeeper_server.id}"] 
+		security_groups = ["${aws_security_group.zookeeper_server.id}"] 
 	}
 }

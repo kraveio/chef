@@ -77,7 +77,7 @@ resource "aws_security_group" "elasticsearch_zen_multicast" {
 	ingress {
 		from_port = 54328
 		to_port = 54328
-		protocol = "ucp"
+		protocol = "udp"
 		security_groups = ["${aws_security_group.elasticsearch_transport.id}"]
 	}
 }

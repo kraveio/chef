@@ -27,7 +27,7 @@ resource "aws_security_group" "ssh_base" {
 		from_port = -1
 		to_port = -1
 		protocol = "icmp"
-		cidr_blocks = ["var.vpc_cidr_block"]
+		cidr_blocks = ["${var.vpc_cidr_block}"]
 	}
 
 }

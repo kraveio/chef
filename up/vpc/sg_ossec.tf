@@ -12,8 +12,8 @@ resource "aws_security_group" "ossec" {
 	ingress {
 		from_port = 1514
 		to_port = 1514
-		protocol = "ucp"
-		security_groups = ["{aws_security_group.ossec_client.id}"]
+		protocol = "udp"
+		security_groups = ["${aws_security_group.ossec_client.id}"]
 	}
 }
 
