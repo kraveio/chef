@@ -9,11 +9,6 @@ variable "aws_account_id" {}
 variable "key_name" {}
 variable "vpc_name" {}
 
-variable "region" {}
-variable "zone_default" {}
-variable "zone_alt" {}
-
-
 # to be put onto the jump server
 # not clear if we can find a better approach
 variable "aws_key_path" {}

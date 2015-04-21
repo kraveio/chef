@@ -2,13 +2,13 @@
 # CHEF
 # m3.large (2cpu, 7.5gb) is probably the ideal size or c3.xlarge (4cpu, 7.5gb)
 #
-resource "aws_instance" "chef" {
+resource "aws_instance" "consul" {
 	depends_on = ["aws_instance.nat", "aws_instance.jump", "aws_route_table.nat"]
 	instance_type = "m3.medium"
 	private_ip = "10.0.10.7"
 	subnet_id = "${aws_subnet.admin.id}"
-	iam_instance_profile = "chef"
-	security_groups = ["${aws_security_group.ssh_base.id}", "${aws_security_group.chef.id}"]
+	#iam_instance_profile = "chef"
+	security_groups = ["${aws_security_group.ssh_base.id}", "${aws_security_group.consul_server.id}"]
 	ami = "${lookup(var.chef_amis, var.region)}"
 	availability_zone = "${var.zone_default}"
 	key_name = "${var.key_name}"
@@ -17,8 +17,9 @@ resource "aws_instance" "chef" {
 	root_block_device {
 		delete_on_termination = true
 	}
+
 	tags {
-		Name = "chef-01"
+		Name = "${format("consul-%02d", count.index+1)}"
 	}
 
 	# wait until server is up
@@ -26,7 +27,7 @@ resource "aws_instance" "chef" {
 		command = "sleep ${var.sleep_seconds}" #it takes a little while for the server to come up
 	}
 
-	# create tunnel on 12022 to chef 
+	# create tunnel on 12022 to server
 	provisioner "local-exec" {
 		command = "ssh -f -L 12022:${self.private_ip}:22 ec2-user@${aws_instance.jump.public_ip} -o StrictHostKeyChecking=no sleep ${var.ssh_wait_seconds} <&- >&- 2>&- &"
 	}
@@ -40,22 +41,23 @@ resource "aws_instance" "chef" {
 
 	provisioner "remote-exec" {
 		inline = [
-			"sudo apt-get update"
+			"mkdir -p ~/bootstrap",
+			"sudo mkdir -p /opt"
 		]
 	}
 
 	provisioner "file" {
-		source = "${path.module}/scripts/bootstrap-chef-server.sh"
-		destination = "~/bootstrap-chef-server.sh"
+		source = "${path.module}/bootstrap/"
+		destination = "~/bootstrap"
     }
 
+	# curl http://169.254.169.254/latest/meta-data/hostname
 	provisioner "remote-exec" {
 		# this way, if needed we can see what script was used to bootstrap the box
 		inline = [
-			"sudo mkdir -p /opt/bootstrap",
-			"sudo mv -f ~/bootstrap-chef-server.sh /opt/bootstrap/",
-			"sudo chmod 774 /opt/bootstrap/bootstrap-chef-server.sh", # make executable
-			"sudo /opt/bootstrap/bootstrap-chef-server.sh"
+			"echo '{\"set_fqdn\":\"${format("consul-%02d", count.index+1)}\"}' >> ~/bootstrap/hostname.json",
+			"sudo mv -f ~/bootstrap /opt/",
+			"sudo bash /opt/bootstrap/bootstrap-chef-sdk.sh"
 		]
 	}
 }
@@ -105,9 +107,6 @@ resource "aws_instance" "jump" {
 		]
 	}
 
-	provisioner "local-exec" {
-        command = "echo ${self.public_ip} >> jump_ips.txt"
-    }
 }
 
 ############################

@@ -1,0 +1,5 @@
+source "https://supermarket.chef.io"
+
+cookbook 'hostnames'
+cookbook 'consul-got', '~> 0.1.3', github: "gotchef/consul-got"
+cookbook 'consul', '~> 0.9.1', github: "kraveio/consul-cookbook"
