@@ -20,7 +20,8 @@ resource "aws_security_group" "ssh_base" {
 		from_port = 22
 		to_port = 22
 		protocol = "tcp"
-		security_groups = ["${aws_security_group.jump.id}"]
+		security_groups = ["${aws_security_group.jump.id}",
+						"${aws_security_group.watchtower.id}"]
 	}
 
 	ingress {
@@ -29,7 +30,6 @@ resource "aws_security_group" "ssh_base" {
 		protocol = "icmp"
 		cidr_blocks = ["${var.vpc_cidr_block}"]
 	}
-
 }
 
 resource "aws_security_group" "nat" {

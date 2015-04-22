@@ -101,7 +101,7 @@ resource "aws_subnet" "redis_cache" {
 	}
 }
 
-resource "aws_subnet" "cache_alt" {
+resource "aws_subnet" "redis_cache_alt" {
 	vpc_id = "${aws_vpc.main.id}"
 	cidr_block = "10.0.61.0/24"
 	availability_zone = "${var.zone_alt}"
@@ -184,21 +184,21 @@ resource "aws_subnet" "sec_alt" {
 	}
 }
 
-resource "aws_subnet" "server_state" {
+resource "aws_subnet" "admin" {
 	vpc_id = "${aws_vpc.main.id}"
 	cidr_block = "10.0.98.0/24"
 	availability_zone = "${var.zone_default}"
 	tags {
-		Name = "server-state"
+		Name = "admin"
 	}
 }
 
-resource "aws_subnet" "server_state_alt" {
+resource "aws_subnet" "admin_alt" {
 	vpc_id = "${aws_vpc.main.id}"
 	cidr_block = "10.0.99.0/24"
 	availability_zone = "${var.zone_alt}"
 	tags {
-		Name = "server-state-alt"
+		Name = "admin-alt"
 	}
 }
 

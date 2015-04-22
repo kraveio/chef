@@ -58,3 +58,9 @@ resource "aws_instance" "consul" {
 	}
 }
 
+
+# NOTES
+# CHEF SERVER
+# m3.large (2cpu, 7.5gb) is probably the ideal size or c3.xlarge (4cpu, 7.5gb)
+
+

@@ -60,19 +60,19 @@ variable "jump_amis" {
 	}
 }
 
-variable "amis" {
+variable "ubuntu_amis" {
 	default = {
 		us-east-1 = "ami-aa7ab6c2" #ubuntu
 		us-west-2 = "ami-f34032c3" #ubuntu
 	}
 }
 
-variable "chef_amis" {
-	default = {
-		us-east-1 = "ami-aa7ab6c2" #ubuntu
-		us-west-2 = "ami-f34032c3" #ubuntu
-	}
-}
+#variable "chef_amis" {
+#	default = {
+#		us-east-1 = "ami-aa7ab6c2" #ubuntu
+#		us-west-2 = "ami-f34032c3" #ubuntu
+#	}
+#}
 
 ############################
 # OUTPUT
