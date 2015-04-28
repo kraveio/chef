@@ -5,7 +5,7 @@ resource "aws_instance" "consul" {
 	subnet_id = "${aws_subnet.admin.id}"
 	#iam_instance_profile = "chef"
 	security_groups = ["${aws_security_group.ssh_base.id}", "${aws_security_group.consul_server.id}"]
-	ami = "${lookup(var.chef_amis, var.region)}"
+	ami = "${lookup(var.ubuntu_amis, var.region)}"
 	availability_zone = "${var.zone_default}"
 	key_name = "${var.key_name}"
 	source_dest_check = true

@@ -19,21 +19,4 @@ resource "aws_subnet" "dmz_alt" {
 	}
 }
 
-resource "aws_subnet" "admin" {
-	vpc_id = "${aws_vpc.main.id}"
-	cidr_block = "10.0.10.0/24"
-	availability_zone = "${var.zone_default}"
-	tags {
-		Name = "admin"
-	}
-}
-
-resource "aws_subnet" "admin_alt" {
-	vpc_id = "${aws_vpc.main.id}"
-	cidr_block = "10.0.11.0/24"
-	availability_zone = "${var.zone_alt}"
-	tags {
-		Name = "admin-alt"
-	}
-}
 

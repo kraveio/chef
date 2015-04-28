@@ -41,6 +41,8 @@ resource "aws_instance" "provision" {
 		destination = "~/.ssh/current"
     }
 
+	# TODO put github key on box
+
 	provisioner "remote-exec" {
 		inline = [
 			"chmod 600 ~/.ssh/current",
